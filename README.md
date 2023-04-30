@@ -1,3 +1,6 @@
+# Fork
+This is a fork from [`JPSImagePickerController`](https://github.com/jpsim/JPSImagePickerController) with some customisations for my own use case.
+
 # JPSVolumeButtonHandler
 
 `JPSVolumeButtonHandler` provides an easy block interface to hardware volume buttons on iOS devices. Perfect for camera apps! Used in [`JPSImagePickerController`](https://github.com/jpsim/JPSImagePickerController).
