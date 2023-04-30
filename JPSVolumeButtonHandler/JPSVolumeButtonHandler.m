@@ -10,7 +10,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 
 // Comment/uncomment out NSLog to enable/disable logging
-#define JPSLog(fmt, ...) //NSLog(fmt, __VA_ARGS__)
+#define JPSLog(fmt, ...) NSLog(fmt, __VA_ARGS__)
 
 #define volumeStep 0.06250f
 
@@ -67,9 +67,10 @@ static CGFloat minVolume                    = 0.00001f + volumeStep;
     [self setupSession];
     self.volumeView.hidden = NO; // Start visible to prevent changes made during setup from showing default volume
     self.disableSystemVolumeHandler = disableSystemVolumeHandler;
-
+    self.appIsActive = YES;
     // There is a delay between setting the volume view before the system actually disables the HUD
     [self performSelector:@selector(setupSession) withObject:nil afterDelay:1];
+    
 }
 
 - (void)stopHandler {
@@ -169,7 +170,9 @@ static CGFloat minVolume                    = 0.00001f + volumeStep;
 }
 
 - (void)setInitialVolume {
-    self.initialVolume = self.session.outputVolume;
+    JPSLog(@"Setting initial volume", nil);
+    self.initialVolume = 0.5;
+//    self.initialVolume = self.session.outputVolume;
     if (self.initialVolume > maxVolume) {
         self.initialVolume = maxVolume;
         self.isAdjustingInitialVolume = YES;
@@ -214,15 +217,20 @@ static CGFloat minVolume                    = 0.00001f + volumeStep;
         
         if (!self.appIsActive) {
             // Probably control center, skip blocks
+            JPSLog(@"App not active, returning", nil);
             return;
         }
 
-        if (self.disableSystemVolumeHandler && newVolume == self.initialVolume) {
-            // Resetting volume, skip blocks
-            return;
-        } else if (self.isAdjustingInitialVolume) {
+//        if (self.disableSystemVolumeHandler && newVolume == self.initialVolume) {
+//            // Resetting volume, skip blocks
+//            JPSLog(@"Resetting volume, not returning", nil);
+////            return;
+//        } else
+        
+        if (self.isAdjustingInitialVolume) {
             if (newVolume == maxVolume || newVolume == minVolume) {
                 // Sometimes when setting initial volume during setup the callback is triggered incorrectly
+                JPSLog(@"Asjusting initial volume, returning", nil);
                 return;
             }
             self.isAdjustingInitialVolume = NO;
