@@ -1,5 +1,5 @@
 # Fork
-This is a fork from [`JPSImagePickerController`](https://github.com/jpsim/JPSImagePickerController) with some customisations for my own use case.
+This is a fork from [`JPSVolumeButtonHandler`](https://github.com/spoonconsulting/JPSVolumeButtonHandler) with some customisations for my own use case.
 
 # JPSVolumeButtonHandler
 
